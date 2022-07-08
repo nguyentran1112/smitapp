@@ -7,9 +7,12 @@ const cartSlice = createSlice({
   reducers: {
     setCart(state, action) {
       {
-        // console.log(action.payload)
+        //console.log(action)
         return action.payload;
       }
+    },
+    setBill(state, action) {
+      return state.map(item => item.quantity >= 1)
     },
     increment(state, {payload}) {
       return state.map(item =>

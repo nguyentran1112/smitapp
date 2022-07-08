@@ -33,13 +33,11 @@ import {
   FlatList,
 } from 'react-native';
 import ProductItemCart from '../Products/ProductItemCart';
-import cartTotalSelector from '../../redux/selectors';
-import cartTotalPriceSelector from '../../redux/selectors';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors, images} from '../../constrants';
 
-const ProductListCart = () => {
+const ProductListCart = props => {
   const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart);
@@ -48,6 +46,14 @@ const ProductListCart = () => {
   //Functions of navigate to / back
   const {navigate, goBack} = navigation;
   //const count = useSelector(selectCount);
+  const totalQuantity = cart.reduce(
+    (total, current) => (total += current.quantity),
+    0,
+  );
+  const totalPrice = cart.reduce(
+    (total, current) => (total += current.price * current.quantity),
+    0,
+  );
   useEffect(() => {
     onValue(firebaseRef(firebaseDatabase, 'products'), async snapshot => {
       if (snapshot.exists()) {
@@ -165,10 +171,7 @@ const ProductListCart = () => {
           <FlatList
             data={filterProduct()}
             renderItem={({item}) => (
-              <ProductItemCart
-                product={item}
-                key={item.name}
-              />
+              <ProductItemCart product={item} key={item.name} />
             )}
             keyExtractor={eachProduct => eachProduct.name}
           />
@@ -188,7 +191,11 @@ const ProductListCart = () => {
           </View>
         )}
       </View>
-      <View style={tw`bg-blue-200 px-3 py-1 rounded-full mx-2 my-2`}>
+      <TouchableOpacity
+        onPress={() => {
+          navigate('Bill', {cart, totalQuantity, totalPrice});
+        }}
+        style={tw`bg-blue-200 px-3 py-1 rounded-full mx-2 my-2`}>
         <Text
           style={{
             backgroundColor: colors.success,
@@ -204,21 +211,15 @@ const ProductListCart = () => {
             right: '4%',
             top: '25%',
           }}>
-          {cart.reduce((total, current) => (total += current.quantity), 0)}
+          {totalQuantity}
         </Text>
         <View style={{display: 'flex', flexDirection: 'row'}}>
           <Text style={tw`text-blue-800 text-xl font-semibold mr-1`}>
-            Tổng tiền:
+            Tổng tiền: 
           </Text>
-          <Text style={tw`text-blue-800 text-xl font-semibold`}>
-            {cart.reduce(
-              (total, current) => (total += current.price * current.quantity),
-              0,
-            )}{' '}
-            VND
-          </Text>
+          <Text style={tw`text-blue-800 text-xl font-semibold`}>{totalPrice} VND</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </>
   );
 };

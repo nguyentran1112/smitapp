@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Bill,
   Register,
   Home,
   Welcome,
@@ -53,6 +54,11 @@ const App = () => {
             options={{headerTitle: 'Test', headerShown: false}}
             name={'ProductListCart'}
             component={ProductListCart}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'Bill'}
+            component={Bill}
           />
         </Stack.Navigator>
       </NavigationContainer>

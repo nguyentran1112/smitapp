@@ -11,10 +11,12 @@ import Contact from "./Notifi/Contact";
 import Loading from "./Loading/Loading"
 import Background from "./Loading/Background"
 import ProductListCart from "./Products/ProductListCart";
+import Bill from "./Products/Bill"
 
 
 
 export {
+    Bill,
     ProductListCart,
     Background,
     Loading,

@@ -3,36 +3,43 @@ import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {images, colors} from '../../constrants';
 import {useSelector, useDispatch} from 'react-redux';
-import {setCart,increment, decrement, clear, removeItem} from '../../redux/cartSlice';
-import {cartTotalPriceSelector} from '../../redux/selectors';
 import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+  setCart,
+  increment,
+  decrement,
+  clear,
+  removeItem,
+} from '../../redux/cartSlice';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 
-const amount = 0;
 const _checkQuantityRender = quantityProduct => {
   return quantityProduct <= 0
     ? 'rgba(115, 147, 179, 0.2)'
     : 'rgb(59, 130, 246)';
 };
-const ProductItemCart = props => {
+const BillItem = props => {
   let {id, name, price, quantity, img, stock} = props.product;
+  const cart = useSelector(state => state.cart);
+  
   const dispatch = useDispatch();
   return (
     <>
-      <View >
+      <View>
         <View
           style={{
-            marginBottom: 15,
-            height: 120,
-            backgroundColor: _checkQuantityRender(stock),
+            marginBottom: 5,
+            height: 100,
+            backgroundColor: colors.secondary,
             padding: 5,
-            borderRadius: 20,
             flexDirection: 'row',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.23,
+            shadowRadius: 2.62,
+            elevation: 4,
           }}>
           <Image
             style={styles.ProductImage}
@@ -48,12 +55,12 @@ const ProductItemCart = props => {
               </Icon>
               <Text style={styles.idOfProduct}>{id}</Text>
             </Text>
-            <Text>
+            {/* <Text>
               <Icon style={styles.iconArchive} name={'archive'}>
                 {' '}
               </Icon>
               <Text style={styles.idOfProduct}>{stock}</Text>
-            </Text>
+            </Text> */}
             <Text style={styles.priceOfProduct}>
               <Icon style={styles.iconDollar} name={'dollar'}>
                 {' '}
@@ -68,7 +75,7 @@ const ProductItemCart = props => {
               top: '50%',
               right: '2%',
             }}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 dispatch(decrement(id));
                 if(quantity <= 0) {
@@ -84,20 +91,20 @@ const ProductItemCart = props => {
                 borderRadius: 20,
               }}>
               <Text style={styles.iconPlusSub}>-</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <Text
               style={{
                 top: '8%',
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontSize: 18,
-                color: 'white',
+                color: 'black',
                 fontWeight: 'bold',
                 marginHorizontal: 16,
               }}>
               {quantity}
             </Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 if(quantity >= stock) {
                   dispatch(decrement(id))
@@ -113,7 +120,7 @@ const ProductItemCart = props => {
                 borderRadius: 20,
               }}>
               <Text style={styles.iconPlusSub}>+</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -123,8 +130,8 @@ const ProductItemCart = props => {
 
 const styles = StyleSheet.create({
   ProductImage: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     resizeMode: 'cover',
     borderRadius: 15,
     marginRight: 10,
@@ -137,16 +144,18 @@ const styles = StyleSheet.create({
   },
   nameOfProduct: {
     marginRight: 5,
-    color: colors.secondary,
-    fontSize: 17,
+    color: 'black',
+    fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 8
   },
   idOfProduct: {
-    color: colors.secondary,
+    color: 'gray',
     fontSize: 15,
+    marginBottom: 8
   },
   iconBarCode: {
-    color: colors.secondary,
+    color: 'gray',
     fontSize: 15,
   },
   iconArchive: {
@@ -157,9 +166,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'rgb(249, 115, 22)',
     fontWeight: 'bold',
+    marginTop: 8
   },
   iconDollar: {
-    fontSize: 18,
+    fontSize: 17,
     color: 'rgb(249, 115, 22)',
     fontWeight: 'bold',
   },
@@ -169,4 +179,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-export default ProductItemCart;
+export default BillItem;
