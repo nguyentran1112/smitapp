@@ -1,0 +1,26 @@
+{
+  "products":[ 
+  {
+    "barcode": 8934563034832,
+    "category": "Sản phẩm khô",
+    "cost": 2800,
+    "id": 30000,
+    "packing": 1,
+    "price": 4000,
+    "stock": 1,
+    "thumbnail": "https://acecookvietnam.vn/wp-content/uploads/2017/07/H%E1%BA%A3o-H%E1%BA%A3o-T%C3%B4m-chua-cay_down33_.png",
+    "title": "Mì hảo hảo tôm chua cay"
+  },
+  {
+    "barcode": 8936136161662,
+    "category": "Sản phẩm khô",
+    "cost": 3000,
+    "id": 30000,
+    "packing": 1,
+    "price": 5000,
+    "stock": 0,
+    "thumbnail": "https://vn-live-05.slatic.net/p/350d1859e681d6047816afb002d25d3d.jpg_525x525q80.jpg",
+    "title": "Mì KoKoMi 90"
+  }
+  ]
+}

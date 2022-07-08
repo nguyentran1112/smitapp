@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "192850043411",
+    "firebase_url": "https://smitapp-d6b43-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smitapp-d6b43",
+    "storage_bucket": "smitapp-d6b43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192850043411:android:ce6dd460f9a58e93ab55e6",
+        "android_client_info": {
+          "package_name": "com.cnfit.smita"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192850043411-i598sppuvigjraifil9p89hv8p9qhoij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo9UepeFrZTo3Z5MHFnZfQh9Sh1azgWxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192850043411-i598sppuvigjraifil9p89hv8p9qhoij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
