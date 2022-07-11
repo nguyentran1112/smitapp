@@ -29,7 +29,6 @@ const ModalPayment = props => {
     <View style={styles.container}>
       <View style={styles.modal}>
         <Text style={styles.headerText}>Thanh toán bằng tiền mặt</Text>
-
         <TextInput
           value={cash}
           placeholder="Nhập số tiền khách trả"

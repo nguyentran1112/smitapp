@@ -69,7 +69,11 @@ const Home = props => {
               />
               <Text style={styles.title}>Tạo đơn hàng</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity
+              onPress={() => {
+                navigate('CheckBill');
+              }}
+              style={styles.card}>
               <LottieView
                 style={{width: 75, height: 75}}
                 autoPlay

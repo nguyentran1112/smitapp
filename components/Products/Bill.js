@@ -34,7 +34,7 @@ import {nanoid} from 'nanoid';
 import ModalPayment from './ModalPayment';
 // create a component
 const Bill = ({navigation, route}) => {
-  const dateOfBill = new Date();
+  const dateOfBill = new Date().toLocaleString();
   //Code for ProductList and Bill
   const listProduct = route.params.cart;
   const listProductInBill = listProduct.filter(
@@ -46,6 +46,8 @@ const Bill = ({navigation, route}) => {
   );
   const totalQuantity = route.params.totalQuantity;
   const totalPrice = route.params.totalPrice;
+  const totalCost = route.params.totalCost;
+
   //Functions of navigate to / back
   const {navigate, goBack} = navigation;
   //Truyen data tu con len cha
@@ -62,7 +64,6 @@ const Bill = ({navigation, route}) => {
   let changeCash = cash => {
     setCash(cash);
   };
-  console.log(cash);
   const [user, setUser] = useState([]);
   //get Email of user
   useEffect(() => {
@@ -200,20 +201,31 @@ const Bill = ({navigation, route}) => {
           </View>
           <TouchableOpacity
             onPress={() => {
-              alert('Thanh toán thành công')
+              alert('Thanh toán thành công');
               const idBill = nanoid();
               let newBil = {
                 id: idBill,
                 totalPrice: totalPrice,
+                totalCost: totalCost,
                 totalQuantity: totalQuantity,
                 dateOfBill: dateOfBill.toString(),
                 creator: email,
-                detailBill: detailBill.toString(),
               };
+
               firebaseSet(
                 firebaseRef(firebaseDatabase, `bills/${idBill}`),
                 newBil,
               ).then(() => {});
+              listProductInBill.forEach(element => {
+                firebaseSet(
+                  firebaseRef(
+                    firebaseDatabase,
+                    `bills/${idBill}/Items/${element.id}`,
+                  ),
+                  element,
+                ).then(() => {});
+              });
+
               listProductUpdate.forEach(element => {
                 if (typeof element.id !== 'undefined') {
                   firebaseSet(
@@ -223,11 +235,18 @@ const Bill = ({navigation, route}) => {
                     ),
                     element.stock - element.quantity,
                   ).then(() => {});
+                  firebaseSet(
+                    firebaseRef(
+                      firebaseDatabase,
+                      `products/${element.id}/sold`,
+                    ),
+                    element.quantity,
+                  ).then(() => {});
                 } else {
                   return null;
                 }
               });
-              navigate('Home')
+              navigate('Home');
             }}
             style={{
               zIndex: 1,

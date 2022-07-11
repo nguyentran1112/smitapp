@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CheckBill,
   Turnover,
   ModalPayment,
   Bill,
@@ -71,6 +72,11 @@ const App = () => {
             options={{headerTitle: 'Test', headerShown: false}}
             name={'Turnover'}
             component={Turnover}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'CheckBill'}
+            component={CheckBill}
           />
           
         </Stack.Navigator>

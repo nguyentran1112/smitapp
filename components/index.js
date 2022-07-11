@@ -13,11 +13,13 @@ import Background from "./Loading/Background"
 import ProductListCart from "./Products/ProductListCart";
 import Bill from "./Products/Bill";
 import ModalPayment from './Products/ModalPayment';
-import Turnover from "./Turnover/Turnover"
+import Turnover from "./Turnover/Turnover";
+import CheckBill from "./CheckBill/CheckBill"
 
 
 
 export {
+    CheckBill,
     Turnover,
     ModalPayment,
     Bill,

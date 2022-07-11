@@ -54,6 +54,11 @@ const ProductListCart = props => {
     (total, current) => (total += current.price * current.quantity),
     0,
   );
+  const totalCost = cart.reduce(
+    (total, current) => (total += current.cost * current.quantity),
+    0,
+  );
+
   useEffect(() => {
     onValue(firebaseRef(firebaseDatabase, 'products'), async snapshot => {
       if (snapshot.exists()) {
@@ -69,6 +74,7 @@ const ProductListCart = props => {
                 price: eachObject.price,
                 stock: eachObject.quantity,
                 quantity: 0,
+                cost: eachObject.cost
               };
             }),
           ),
@@ -193,7 +199,7 @@ const ProductListCart = props => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          navigate('Bill', {cart, totalQuantity, totalPrice});
+          navigate('Bill', {cart, totalQuantity, totalPrice, totalCost});
         }}
         style={tw`bg-blue-200 px-3 py-1 rounded-full mx-2 my-2`}>
         <Text
