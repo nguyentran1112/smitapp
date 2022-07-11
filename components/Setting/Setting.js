@@ -47,7 +47,7 @@ const Setting = props => {
     setChoiceData(data);
   };
 
-  // console.log(userFireBase);
+  
   const changePassword = pwN => {
     // setPasswordOld(pwO);
     

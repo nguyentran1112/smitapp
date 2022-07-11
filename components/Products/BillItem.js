@@ -20,27 +20,11 @@ const _checkQuantityRender = quantityProduct => {
 const BillItem = props => {
   let {id, name, price, quantity, img, stock} = props.product;
   const cart = useSelector(state => state.cart);
-  
   const dispatch = useDispatch();
   return (
     <>
       <View>
-        <View
-          style={{
-            marginBottom: 5,
-            height: 100,
-            backgroundColor: colors.secondary,
-            padding: 5,
-            flexDirection: 'row',
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.23,
-            shadowRadius: 2.62,
-            elevation: 4,
-          }}>
+        <View style={styles.container}>
           <Image
             style={styles.ProductImage}
             source={{
@@ -129,6 +113,21 @@ const BillItem = props => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 5,
+    height: 100,
+    backgroundColor: colors.secondary,
+    padding: 5,
+    flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
   ProductImage: {
     width: 80,
     height: 80,
@@ -147,12 +146,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 8
+    marginBottom: 8,
   },
   idOfProduct: {
     color: 'gray',
     fontSize: 15,
-    marginBottom: 8
+    marginBottom: 8,
   },
   iconBarCode: {
     color: 'gray',
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'rgb(249, 115, 22)',
     fontWeight: 'bold',
-    marginTop: 8
+    marginTop: 8,
   },
   iconDollar: {
     fontSize: 17,

@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Turnover,
+  ModalPayment,
   Bill,
   Register,
   Home,
@@ -60,6 +62,17 @@ const App = () => {
             name={'Bill'}
             component={Bill}
           />
+          <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'ModalPayment'}
+            component={ModalPayment}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'Turnover'}
+            component={Turnover}
+          />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

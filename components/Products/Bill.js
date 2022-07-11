@@ -10,6 +10,7 @@ import {
   removeItem,
 } from '../../redux/cartSlice';
 import {
+  Modal,
   View,
   Text,
   StyleSheet,
@@ -30,6 +31,7 @@ import {
 } from '../../firebase/firebase';
 import 'react-native-get-random-values';
 import {nanoid} from 'nanoid';
+import ModalPayment from './ModalPayment';
 // create a component
 const Bill = ({navigation, route}) => {
   const dateOfBill = new Date();
@@ -46,6 +48,21 @@ const Bill = ({navigation, route}) => {
   const totalPrice = route.params.totalPrice;
   //Functions of navigate to / back
   const {navigate, goBack} = navigation;
+  //Truyen data tu con len cha
+  const [isModal, setIsModal] = useState(false);
+  const [cash, setCash] = useState('');
+  const [data, setChoiceData] = useState('');
+  let changeModalVisible = bool => {
+    setIsModal(bool);
+  };
+  console.log(data);
+  const setData = data => {
+    setChoiceData(data);
+  };
+  let changeCash = cash => {
+    setCash(cash);
+  };
+  console.log(cash);
   const [user, setUser] = useState([]);
   //get Email of user
   useEffect(() => {
@@ -183,6 +200,7 @@ const Bill = ({navigation, route}) => {
           </View>
           <TouchableOpacity
             onPress={() => {
+              alert('Thanh toán thành công')
               const idBill = nanoid();
               let newBil = {
                 id: idBill,
@@ -195,9 +213,7 @@ const Bill = ({navigation, route}) => {
               firebaseSet(
                 firebaseRef(firebaseDatabase, `bills/${idBill}`),
                 newBil,
-              ).then(() => {
-                alert('Thanh toán thành công');
-              });
+              ).then(() => {});
               listProductUpdate.forEach(element => {
                 if (typeof element.id !== 'undefined') {
                   firebaseSet(
@@ -211,8 +227,7 @@ const Bill = ({navigation, route}) => {
                   return null;
                 }
               });
-
-              navigate('Home');
+              navigate('Home')
             }}
             style={{
               zIndex: 1,
@@ -229,6 +244,18 @@ const Bill = ({navigation, route}) => {
             <Text style={styles.appButtonText}>Thanh toán</Text>
           </TouchableOpacity>
         </View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          animations={true}
+          visible={isModal}
+          nRequestClose={() => changeModalVisible(false)}>
+          <ModalPayment
+            changeModalVisible={changeModalVisible}
+            setData={setData}
+            changeCash={changeCash}
+          />
+        </Modal>
       </View>
     </>
   );
@@ -242,7 +269,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   header: {
-    backgroundColor: colors.third,
+    backgroundColor: 'rgb(191, 219, 254)',
     padding: 10,
   },
   headerTitle: {
@@ -252,7 +279,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   billInfo: {
-    backgroundColor: colors.third,
+    backgroundColor: 'rgb(191, 219, 254)',
     padding: 10,
   },
   appButtonText: {

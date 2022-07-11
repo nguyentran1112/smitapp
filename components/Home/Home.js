@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import tw from 'twrnc';
 const WIDTH = Dimensions.get('window').width;
 
-const Home = (props) => {
+const Home = props => {
   let today = new Date();
   let hours = (today.getHours() < 10 ? '0' : '') + today.getHours();
   //Navigation
@@ -87,7 +87,11 @@ const Home = (props) => {
               />
               <Text style={styles.title}>Tạo mã hàng</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity
+              onPress={() => {
+                navigate('Turnover');
+              }}
+              style={styles.card}>
               <LottieView
                 style={{width: 75, height: 75}}
                 autoPlay

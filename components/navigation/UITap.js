@@ -53,7 +53,6 @@ const UITap = props => {
         name={'Notification'}
         component={Notification}
       />
-
       <Tab.Screen
         options={{tabBarLabel: 'Sản phẩm', tabBarLabelStyle: {fontSize: 12}}}
         name={'ProductList'}
