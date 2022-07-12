@@ -42,7 +42,6 @@ const Turnover = () => {
     return `#${randomColor}`;
   };
 
-  console.log(generateColor());
   useEffect(() => {
     onValue(firebaseRef(firebaseDatabase, 'bills'), async snapshot => {
       if (snapshot.exists()) {
@@ -88,7 +87,6 @@ const Turnover = () => {
       }
     });
   }, []);
-  console.log(products);
   const [listBill, setlistBill] = useState([]);
   const turnover = listBill.reduce((total, bill) => total + bill.totalPrice, 0);
   const totalProducts = listBill.reduce(

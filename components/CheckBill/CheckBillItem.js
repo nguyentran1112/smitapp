@@ -108,12 +108,12 @@ const CheckBillItem = ({bill}) => {
           </View>
           <View style={styles.styleViewInfoFooter}>
             <Text style={{fontSize: 15, marginVertical: 4}}>
-              Quý khách vui lòng kiểm tra kỹ hóa đơn trước khi rời cửa hàng.
+              Quý khách vui lòng kiểm tra kỹ hóa đơn trước khi rời cửa hàng
             </Text>
           </View>
           <View style={styles.styleViewInfoFooter}>
             <Text style={{fontSize: 15, marginVertical: 4}}>
-              Mọi thông tin thắc mắc và đóng góp ý kiến xin gửi về Email:
+              Mọi thông tin thắc mắc và đóng góp ý kiến xin gửi về email:
               smitapp@cnfit.com
             </Text>
           </View>

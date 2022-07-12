@@ -20,11 +20,12 @@ import {colors, images} from '../../constrants';
 import BackgroundQrcode from '../Loading/BackgroundQrcode';
 // create a component
 const QrScanner = ({navigation, route}) => {
+  const {navigate, goBack} = navigation;
   const [dataScanner, setDataScanner] = useState('');
   const [copiedText, setCopiedText] = useState('');
   const [isTorch, setIsTorch] = useState(false);
   const [isBtn, setIsBtn] = useState(false);
-  const [textBtn, setTextBtn] = useState('OK. Copy it!');
+  const [textBtn, setTextBtn] = useState('Sao chép');
   const [torch, setTorch] = useState('');
   console.log(route.params.getData);
   const copyToClipboard = () => {
@@ -79,6 +80,13 @@ const QrScanner = ({navigation, route}) => {
           style={styles.btnTorch}>
           <Image style={styles.iconTorch} source={images.iconTorch} />
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            goBack('CheckBill');
+          }}
+          style={styles.btnBack}>
+          <Image style={styles.iconTorch} source={images.iconBack} />
+        </TouchableOpacity>
 
         <QRCodeScanner
           style={{zIndex: 1}}
@@ -100,11 +108,11 @@ const QrScanner = ({navigation, route}) => {
             route.params.getData(copiedText);
             if (isBtn) {
               showToastGoBack();
-              setTextBtn('OK. Copy it!');
+              setTextBtn('Sao chép');
               setIsBtn(false);
             } else {
               showToastCopied();
-              setTextBtn('Ok. Tìm đơn hàng');
+              setTextBtn('Tìm đơn hàng');
               setIsBtn(true);
             }
           }}
@@ -155,13 +163,21 @@ const styles = StyleSheet.create({
     height: 40,
     resizeMode: 'cover',
     borderRadius: 20,
-    backgroundColor: 'rgb(147, 197, 253)',
-    marginRight: 10,
+    backgroundColor: colors.secondary,
+    
+    
   },
   btnTorch: {
     position: 'absolute',
     zIndex: 1,
-    right: '5%',
+    right: '2%',
+    top: '20%',
+  },
+  btnBack: {
+    position: 'absolute',
+    zIndex: 1,
+    left: '2%',
+    top: '20%',
   },
 });
 

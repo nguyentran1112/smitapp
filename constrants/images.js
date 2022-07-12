@@ -11,7 +11,8 @@ export default {
     iconPen: require('D:/Documents/Learn/TestApp/smitapp/assets/pencil.png'),
     logoCnfit: require('D:/Documents/Learn/TestApp/smitapp/assets/CNFITWELCOME.png'),
     logoSmitapp: require('D:/Documents/Learn/TestApp/smitapp/assets/smitaLogo.jpg'),
-    iconTorch: require('D:/Documents/Learn/TestApp/smitapp/assets/torch.png')
+    iconTorch: require('D:/Documents/Learn/TestApp/smitapp/assets/torch.png'),
+    iconBack: require('D:/Documents/Learn/TestApp/smitapp/assets/iconBack.png'),
     
 
 }
