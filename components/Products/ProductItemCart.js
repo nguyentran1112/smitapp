@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {images, colors} from '../../constrants';
 import {useSelector, useDispatch} from 'react-redux';
 import {setCart,increment, decrement, clear, removeItem} from '../../redux/cartSlice';
-import {cartTotalPriceSelector} from '../../redux/selectors';
 import {
   View,
   StyleSheet,
@@ -13,7 +11,6 @@ import {
   Image,
 } from 'react-native';
 
-const amount = 0;
 const _checkQuantityRender = quantityProduct => {
   return quantityProduct <= 0
     ? 'rgba(115, 147, 179, 0.2)'

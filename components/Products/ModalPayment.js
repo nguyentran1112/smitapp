@@ -16,15 +16,14 @@ import {
 } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
 const ModalPayment = props => {
-  const [cash, setCash] = useState('');
+  const [cash, setCash] = useState();
   const closeModal = (bool, data, cash) => {
     props.changeModalVisible(bool);
     props.setData(data);
-    if(bool === false) {
-      props.changeCash(cash);
-    }
+    props.changeCash(cash);
   };
   
+
   return (
     <View style={styles.container}>
       <View style={styles.modal}>

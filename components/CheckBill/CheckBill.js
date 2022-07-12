@@ -1,5 +1,6 @@
 //import liraries
 import React, {Component, useState, useEffect} from 'react';
+import LottieView from 'lottie-react-native';
 import {
   View,
   Text,
@@ -25,7 +26,8 @@ import {
 const CheckBill = props => {
   const [bill, setBill] = useState([]);
   const [searchText, setSearchText] = useState('');
-  //console.log(bill);
+  const checkBillItem = bill => (bill == '' ? false : true);
+  console.log(checkBillItem(bill));
 
   return (
     <View style={styles.container}>
@@ -49,6 +51,9 @@ const CheckBill = props => {
                             totalPrice: eachObject.totalPrice,
                             totalQuantity: eachObject.totalQuantity,
                             dateOfBill: eachObject.dateOfBill,
+                            cash: eachObject.cash,
+                            inDebt: eachObject.inDebt,
+                            payingGuests: eachObject.payingGuests,
                             Items: Object.keys(eachObject.Items).map(
                               eachKey => {
                                 eachObject.Items[eachKey];
@@ -80,10 +85,28 @@ const CheckBill = props => {
             }}
             style={[
               tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`,
-            , styles.textInput]}></TextInput>
+              ,
+              styles.textInput,
+            ]}></TextInput>
         </View>
       </View>
-      <CheckBillItem bill={bill} />
+      {checkBillItem(bill) ? (
+        <CheckBillItem bill={bill} />
+      ) : (
+        <View
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            flex: 1,
+          }}>
+          <LottieView
+            autoPlay
+            loop
+            source={require('../../assets/notfound1.json')}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -143,7 +166,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginLeft: 10,
-  }
+  },
 });
 
 //make this component available to the app
