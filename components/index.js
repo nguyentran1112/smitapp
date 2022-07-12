@@ -14,11 +14,15 @@ import ProductListCart from "./Products/ProductListCart";
 import Bill from "./Products/Bill";
 import ModalPayment from './Products/ModalPayment';
 import Turnover from "./Turnover/Turnover";
-import CheckBill from "./CheckBill/CheckBill"
+import CheckBill from "./CheckBill/CheckBill";
+import QrScanner from "./CheckBill/QrScanner";
+import BackgroundQrcode from "./Loading/BackgroundQrcode";
 
 
 
 export {
+    BackgroundQrcode,
+    QrScanner,
     CheckBill,
     Turnover,
     ModalPayment,

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  QrScanner,
   CheckBill,
   Turnover,
   ModalPayment,
@@ -77,6 +78,11 @@ const App = () => {
             options={{headerTitle: 'Test', headerShown: false}}
             name={'CheckBill'}
             component={CheckBill}
+          />
+           <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'QrScanner'}
+            component={QrScanner}
           />
           
         </Stack.Navigator>

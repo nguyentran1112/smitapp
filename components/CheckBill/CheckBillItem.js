@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {colors, images} from '../../constrants';
 import {Table, Row, Rows} from 'react-native-table-component';
+import QRCode from 'react-native-qrcode-svg';
 
 // create a component
 const CheckBillItem = ({bill}) => {
@@ -29,12 +30,11 @@ const CheckBillItem = ({bill}) => {
   if (typeof gotcha !== 'undefined') {
     gotcha.forEach(element => {
       element.totalPrice = element.productQuantity * element.productPrice;
-      tableData.push(Object.values(element))
+      tableData.push(Object.values(element));
       console.log(element);
     });
   }
 
-  console.log(tableData);
   return (
     <>
       <ScrollView>
@@ -98,6 +98,14 @@ const CheckBillItem = ({bill}) => {
           <View style={styles.styleViewInfo}>
             <Text style={styles.styleTextInfo}>Mã hóa đơn: {id}</Text>
           </View>
+          <View style={{alignSelf: 'center', marginVertical: 4}}>
+            <QRCode
+              value={id}
+              logo={(source = images.logoSmitapp)}
+              logoSize={30}
+              logoBackgroundColor="transparent"
+            />
+          </View>
           <View style={styles.styleViewInfoFooter}>
             <Text style={{fontSize: 15, marginVertical: 4}}>
               Quý khách vui lòng kiểm tra kỹ hóa đơn trước khi rời cửa hàng.
@@ -109,6 +117,7 @@ const CheckBillItem = ({bill}) => {
               smitapp@cnfit.com
             </Text>
           </View>
+          
         </View>
       </ScrollView>
     </>

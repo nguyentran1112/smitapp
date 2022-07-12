@@ -252,52 +252,7 @@ const Bill = ({navigation, route}) => {
           <TouchableOpacity
             onPress={() => {
               changeModalVisible(true);
-              // alert('Thanh toán thành công');
-              // const idBill = nanoid();
-              // let newBil = {
-              //   id: idBill,
-              //   totalPrice: totalPrice,
-              //   totalCost: totalCost,
-              //   totalQuantity: totalQuantity,
-              //   dateOfBill: dateOfBill.toString(),
-              //   creator: email,
-              // };
-
-              // firebaseSet(
-              //   firebaseRef(firebaseDatabase, `bills/${idBill}`),
-              //   newBil,
-              // ).then(() => {});
-              // listProductInBill.forEach(element => {
-              //   firebaseSet(
-              //     firebaseRef(
-              //       firebaseDatabase,
-              //       `bills/${idBill}/Items/${element.id}`,
-              //     ),
-              //     element,
-              //   ).then(() => {});
-              // });
-
-              // listProductUpdate.forEach(element => {
-              //   if (typeof element.id !== 'undefined') {
-              //     firebaseSet(
-              //       firebaseRef(
-              //         firebaseDatabase,
-              //         `products/${element.id}/quantity`,
-              //       ),
-              //       element.stock - element.quantity,
-              //     ).then(() => {});
-              //     firebaseSet(
-              //       firebaseRef(
-              //         firebaseDatabase,
-              //         `products/${element.id}/sold`,
-              //       ),
-              //       element.quantity,
-              //     ).then(() => {});
-              //   } else {
-              //     return null;
-              //   }
-              // });
-              // navigate('Home');
+              
             }}
             style={{
               zIndex: 1,

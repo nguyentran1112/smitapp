@@ -2,6 +2,7 @@
 import React, {Component, useState, useEffect} from 'react';
 import LottieView from 'lottie-react-native';
 import {
+  ToastAndroid,
   View,
   Text,
   StyleSheet,
@@ -13,6 +14,7 @@ import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {images, colors} from '../../constrants';
 import CheckBillItem from './CheckBillItem';
+import Loading from '../Loading/Loading'
 import {
   onValue,
   auth,
@@ -24,17 +26,35 @@ import {
 
 // create a component
 const CheckBill = props => {
+  //Navigation
+  const [findPending, setFindPending] = useState(false);
+  const {navigation, routes} = props;
+  //Functions of navigate to / back
+  const {navigate, goBack} = navigation;
   const [bill, setBill] = useState([]);
   const [searchText, setSearchText] = useState('');
   const checkBillItem = bill => (bill == '' ? false : true);
-  console.log(checkBillItem(bill));
-
+  const [data, setData] = useState('');
+  const getData = text => {
+    setData(text);
+    setSearchText(text);
+  };
+  console.log(`Day la data ${searchText}`);
+  const showToastFoundedBill = () => {
+    ToastAndroid.showWithGravity(
+      'Đã tìm thấy hóa đơn',
+      ToastAndroid.SHORT,
+      ToastAndroid.TOP,
+    );
+  };
   return (
+    <>
     <View style={styles.container}>
       <View style={styles.headerProductList}>
         <View style={styles.topHeaderProductList}>
           <TouchableOpacity
             onPress={() => {
+              checkBillItem(bill) ? showToastFoundedBill() : null;
               onValue(
                 firebaseRef(firebaseDatabase, 'bills'),
                 async snapshot => {
@@ -88,6 +108,21 @@ const CheckBill = props => {
               ,
               styles.textInput,
             ]}></TextInput>
+          <TouchableOpacity
+            onPress={() => {
+              navigate('QrScanner', {getData});
+            }}
+            style={{
+              backgroundColor: colors.third,
+              height: 40,
+              width: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: 20,
+              marginLeft: 14,
+            }}>
+            <Icon style={styles.iconQrCode} name={'qrcode'}></Icon>
+          </TouchableOpacity>
         </View>
       </View>
       {checkBillItem(bill) ? (
@@ -108,6 +143,8 @@ const CheckBill = props => {
         </View>
       )}
     </View>
+    {findPending?(<Loading></Loading>):null}
+    </>
   );
 };
 // define your styles
@@ -166,6 +203,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     marginLeft: 10,
+  },
+  iconQrCode: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: colors.secondary,
   },
 });
 
