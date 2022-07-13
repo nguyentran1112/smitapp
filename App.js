@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  SplashScreen,
   QrScanner,
   CheckBill,
   Turnover,
@@ -28,7 +29,12 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'SplashScreen'}
+            component={SplashScreen}
+          />
           <Stack.Screen
             options={{headerTitle: 'Test', headerShown: false}}
             name={'Welcome'}

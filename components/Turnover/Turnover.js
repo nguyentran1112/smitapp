@@ -56,6 +56,7 @@ const Turnover = () => {
               totalPrice: eachObject.totalPrice,
               totalQuantity: eachObject.totalQuantity,
               totalCost: eachObject.totalCost,
+              cash: eachObject.cash,
             };
           }),
         );
@@ -74,11 +75,14 @@ const Turnover = () => {
           Object.keys(snapshotObject).map(eachKey => {
             let eachObject = snapshotObject[eachKey];
             return {
-              name: ` ${eachObject.name}`,
+              name: eachObject.name,
               sold: eachObject.sold,
               color: generateColor().toString(),
+              cost: eachObject.cost,
+              quantity: eachObject.quantity,
+              price: eachObject.price,
               legendFontColor: 'white',
-              legendFontSize: 11,
+              legendFontSize: 8,
             };
           }),
         );
@@ -95,7 +99,18 @@ const Turnover = () => {
   );
   const grossProfit =
     turnover - listBill.reduce((total, bill) => total + bill.totalCost, 0);
+  const totalCash = listBill.reduce((total, bill) => total + bill.cash, 0);
+  console.log(products);
   const totalBill = listBill.length;
+  const totalCost = products.reduce(
+    (total, product) => total + product.cost * product.quantity,
+    0,
+  );
+  const totalSale = products.reduce(
+    (total, product) => total + product.price * product.quantity,
+    0,
+  );
+  console.log(`Tong cost la ${totalSale}`);
   return (
     <>
       <ScrollView>
@@ -192,6 +207,44 @@ const Turnover = () => {
                     width: '100%',
                     borderColor: 'gray',
                   }}>
+                  <Text style={{color: 'gray', fontSize: 15}}>
+                    Tiền nhận thực tế
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: colors.primary,
+                      fontSize: 16,
+                    }}>
+                    {totalCash} VNĐ
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: 8,
+                    paddingTop: 4,
+                    borderTopWidth: 1,
+                    width: '100%',
+                    borderColor: 'gray',
+                  }}>
+                  <Text style={{color: 'gray', fontSize: 15}}>Chênh lệch</Text>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: colors.primary,
+                      fontSize: 16,
+                    }}>
+                    {turnover - totalCash} VNĐ
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: 8,
+                    paddingTop: 4,
+                    borderTopWidth: 1,
+                    width: '100%',
+                    borderColor: 'gray',
+                  }}>
                   <Text style={{color: 'gray', fontSize: 15}}>Lãi gộp</Text>
                   <Text
                     style={{
@@ -200,6 +253,46 @@ const Turnover = () => {
                       fontSize: 16,
                     }}>
                     {grossProfit} VNĐ
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: 8,
+                    paddingTop: 4,
+                    borderTopWidth: 1,
+                    width: '100%',
+                    borderColor: 'gray',
+                  }}>
+                  <Text style={{color: 'gray', fontSize: 15}}>
+                    Tổng tiền hàng
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: colors.primary,
+                      fontSize: 16,
+                    }}>
+                    {totalCost} VNĐ
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: 8,
+                    paddingTop: 4,
+                    borderTopWidth: 1,
+                    width: '100%',
+                    borderColor: 'gray',
+                  }}>
+                  <Text style={{color: 'gray', fontSize: 15}}>
+                    Doanh thu dự kiến
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: colors.primary,
+                      fontSize: 16,
+                    }}>
+                    {totalSale} VNĐ
                   </Text>
                 </View>
               </View>
@@ -246,6 +339,47 @@ const Turnover = () => {
             alignSelf: 'center',
           }}
         />
+        <Text
+          style={{
+            marginTop: 16,
+            justifyContent: 'center',
+            alignSelf: 'center',
+            color: '#1f2687',
+            fontWeight: 'bold',
+            fontSize: 18,
+          }}>
+          Tổng tiền hàng và doanh thu dự kiến
+        </Text>
+        <BarChart
+          data={{
+            labels: ['Tổng tiền hàng', 'Doanh thu dự kiến'],
+            datasets: [
+              {
+                data: [totalCost, totalSale],
+              },
+            ],
+          }}
+          withVerticalLabels="true"
+          width={Dimensions.get('window').width - 20}
+          height={260}
+          fromZero={true}
+          yAxisLabel="$"
+          chartConfig={{
+            backgroundColor: '#373ea3',
+            backgroundGradientFrom: '#0f145c',
+            backgroundGradientTo: '#1f2687',
+            decimalPlaces: 0, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            fillShadowGradientOpacity: 1,
+            fillShadowGradient: '#ffffff',
+          }}
+          style={{
+            margin: 8,
+            borderRadius: 20,
+            alignSelf: 'center',
+          }}
+        />
 
         <Text
           style={{
@@ -254,14 +388,14 @@ const Turnover = () => {
             color: '#1f2687',
             fontWeight: 'bold',
             fontSize: 18,
-            marginTop: 16
+            marginTop: 16,
           }}>
           Cơ cấu sản phẩm bán ra
         </Text>
         <PieChart
           data={products}
           width={Dimensions.get('window').width - 20}
-          height={220}
+          height={250}
           chartConfig={{
             backgroundColor: '#373ea3',
             backgroundGradientFrom: '#0f145c',
@@ -275,7 +409,7 @@ const Turnover = () => {
           style={{
             justifyContent: 'center',
             alignSelf: 'center',
-            margin: 8,
+            marginVertical: 8,
             borderRadius: 20,
             backgroundColor: '#1f2687',
             backgroundGradientFrom: '#0f145c',
@@ -283,7 +417,7 @@ const Turnover = () => {
           }}
           accessor="sold"
           backgroundColor="transparent"
-          paddingLeft="10"
+          paddingLeft="14"
           absolute //for the absolute number remove if you want percentage
         />
       </ScrollView>

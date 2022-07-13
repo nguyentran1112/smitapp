@@ -23,23 +23,24 @@ const Welcome = props => {
   //Functions of navigate to / back
   const {navigate, goBack} = navigation;
   //Check user and add information to database
-  useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        const userId = user.uid;
-        let userInfor = {
-          userId: user.uid,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          accessToken: user.accessToken,
-        };
-        navigate('UITap');
-        firebaseSet(firebaseRef(firebaseDatabase, `user/${userId}`), userInfor);
-        AsyncStorage.setItem('user', JSON.stringify(userInfor));
-      } else {
-      }
-    });
-  });
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, user => {
+  //     if (user) {
+  //       const userId = user.uid;
+  //       let userInfor = {
+  //         userId: user.uid,
+  //         email: user.email,
+  //         emailVerified: user.emailVerified,
+  //         accessToken: user.accessToken,
+  //       };
+  //       navigate('UITap');
+  //       firebaseSet(firebaseRef(firebaseDatabase, `user/${userId}`), userInfor);
+  //       AsyncStorage.setItem('user', JSON.stringify(userInfor));
+  //     } else {
+
+  //     }
+  //   });
+  // });
 
   return (
     <ImageBackground

@@ -151,7 +151,7 @@ const Setting = props => {
         <TouchableOpacity
           onPress={async () => {
             await auth.signOut();
-            navigation.dispatch(StackActions.popToTop());
+            navigation.dispatch(StackActions.pop(0));
           }}
           style={{
             flexDirection: 'row',

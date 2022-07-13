@@ -17,10 +17,12 @@ import Turnover from "./Turnover/Turnover";
 import CheckBill from "./CheckBill/CheckBill";
 import QrScanner from "./CheckBill/QrScanner";
 import BackgroundQrcode from "./Loading/BackgroundQrcode";
+import SplashScreen from "./Welcome/SplashScreen";
 
 
 
 export {
+    SplashScreen,
     BackgroundQrcode,
     QrScanner,
     CheckBill,
