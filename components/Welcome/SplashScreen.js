@@ -47,13 +47,7 @@ const SplashScreen = props => {
       source={images.backgroundWelcome}
       resizeMode="cover"
       style={{flex: 1, justifyContent: 'center'}}>
-      <View style={tw`items-center absolute inset-x-0 top-10 h-16`}>
-        <View style={tw`bg-blue-200 px-3 py-1 rounded-full`}>
-          <Text style={tw`text-blue-800 text-2xl font-semibold`}>
-            Welcome to SMITA
-          </Text>
-        </View>
-      </View>
+     
     </ImageBackground>
   );
 };

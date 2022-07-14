@@ -17,6 +17,7 @@ import {
   firebaseRef,
   firebaseDatabase,
 } from '../../firebase/firebase';
+import BackgroundQrcode from '../Loading/BackgroundQrcode'
 const Welcome = props => {
   //Navigation
   const {navigation, routes} = props;
@@ -68,6 +69,7 @@ const Welcome = props => {
         style={styles.appBtnRegister}>
         <Text style={styles.appButtonText}>Đăng ký</Text>
       </TouchableOpacity>
+     
     </ImageBackground>
   );
 };

@@ -31,10 +31,20 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from 'react-native-chart-kit';
+import DropDownPicker from 'react-native-dropdown-picker';
 import {Dimensions} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 // create a component
 const Turnover = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Snack', value: 2000},
+    {label: 'Thực phẩm khô', value: 3000},
+    {label: 'Nước đóng chai/lon', value: 4000},
+    {label: 'Sữa và chế phẩm từ sữa', value: 5000},
+    {label: 'Sản phẩm đóng gói khác', value: 6000},
+  ]);
   const generateColor = () => {
     const randomColor = Math.floor(Math.random() * 16777215)
       .toString(16)
@@ -66,7 +76,6 @@ const Turnover = () => {
     });
   }, []);
   let [products, setProducts] = useState([]);
-
   useEffect(() => {
     onValue(firebaseRef(firebaseDatabase, 'products'), async snapshot => {
       if (snapshot.exists()) {
@@ -82,7 +91,8 @@ const Turnover = () => {
               quantity: eachObject.quantity,
               price: eachObject.price,
               legendFontColor: 'white',
-              legendFontSize: 8,
+              legendFontSize: 10,
+              groupId: eachObject.grId,
             };
           }),
         );
@@ -100,8 +110,12 @@ const Turnover = () => {
   const grossProfit =
     turnover - listBill.reduce((total, bill) => total + bill.totalCost, 0);
   const totalCash = listBill.reduce((total, bill) => total + bill.cash, 0);
-  console.log(products);
+
+  const labelPieChart = items
+    .filter(item => item.value === value)
+    .map(item => item.label);
   const totalBill = listBill.length;
+  console.log(labelPieChart);
   const totalCost = products.reduce(
     (total, product) => total + product.cost * product.quantity,
     0,
@@ -110,9 +124,27 @@ const Turnover = () => {
     (total, product) => total + product.price * product.quantity,
     0,
   );
-  console.log(`Tong cost la ${totalSale}`);
+
   return (
     <>
+      <View style={styles.header}>
+        <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+          zIndex={1000}
+          style={{
+            backgroundColor: colors.third,
+          }}
+          textStyle={{
+            fontSize: 15,
+          }}
+          theme="LIGHT"
+        />
+      </View>
       <ScrollView>
         <View style={styles.container}>
           <View
@@ -122,27 +154,10 @@ const Turnover = () => {
               flexDirection: 'row',
               marginVertical: 20,
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                height: '100%',
-                width: '100%',
-                backgroundColor: colors.secondary,
-                paddingHorizontal: 15,
-                paddingBottom: 15,
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.23,
-                shadowRadius: 2.62,
-                elevation: 4,
-                borderRadius: 20,
-              }}>
+            <View style={styles.card}>
               <View>
                 <View style={tw`pt-4 items-center`}>
-                  <View style={{}}>
+                  <View>
                     <Text
                       style={{color: 'gray', fontWeight: 'bold', fontSize: 16}}>
                       TỔNG DOANH THU
@@ -159,14 +174,7 @@ const Turnover = () => {
                     {turnover} VNĐ
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>
                     Đơn hàng đã bán
                   </Text>
@@ -179,14 +187,7 @@ const Turnover = () => {
                     {totalBill} đơn
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>
                     Số hàng đã bán
                   </Text>
@@ -199,14 +200,7 @@ const Turnover = () => {
                     {totalProducts} sản phẩm
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>
                     Tiền nhận thực tế
                   </Text>
@@ -216,17 +210,10 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {totalCash} VNĐ
+                    {totalCash > turnover ? turnover : totalCash} VNĐ
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>Chênh lệch</Text>
                   <Text
                     style={{
@@ -234,17 +221,10 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {turnover - totalCash} VNĐ
+                    {turnover - totalCash < 0 ? 0 : turnover - totalCash} VNĐ
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>Lãi gộp</Text>
                   <Text
                     style={{
@@ -255,14 +235,7 @@ const Turnover = () => {
                     {grossProfit} VNĐ
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>
                     Tổng tiền hàng
                   </Text>
@@ -275,14 +248,7 @@ const Turnover = () => {
                     {totalCost} VNĐ
                   </Text>
                 </View>
-                <View
-                  style={{
-                    marginTop: 8,
-                    paddingTop: 4,
-                    borderTopWidth: 1,
-                    width: '100%',
-                    borderColor: 'gray',
-                  }}>
+                <View style={styles.sparator}>
                   <Text style={{color: 'gray', fontSize: 15}}>
                     Doanh thu dự kiến
                   </Text>
@@ -361,7 +327,7 @@ const Turnover = () => {
           }}
           withVerticalLabels="true"
           width={Dimensions.get('window').width - 20}
-          height={260}
+          height={220}
           fromZero={true}
           yAxisLabel="$"
           chartConfig={{
@@ -378,48 +344,52 @@ const Turnover = () => {
             margin: 8,
             borderRadius: 20,
             alignSelf: 'center',
+            marginBottom: 16
           }}
         />
 
-        <Text
-          style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
-            color: '#1f2687',
-            fontWeight: 'bold',
-            fontSize: 18,
-            marginTop: 16,
-          }}>
-          Cơ cấu sản phẩm bán ra
-        </Text>
-        <PieChart
-          data={products}
-          width={Dimensions.get('window').width - 20}
-          height={250}
-          chartConfig={{
-            backgroundColor: '#373ea3',
-            backgroundGradientFrom: '#0f145c',
-            backgroundGradientTo: '#1f2687',
-            decimalPlaces: 0,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
+        {value != null ? (
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              color: '#1f2687',
+              fontWeight: 'bold',
+              fontSize: 18,
+            }}>
+            Bán ra theo nhóm {labelPieChart.toString()}
+          </Text>
+        ) : null}
+        {value != null ? (
+          <PieChart
+            data={products.filter(product => product.groupId == value)}
+            width={Dimensions.get('window').width - 20}
+            height={250}
+            chartConfig={{
+              backgroundColor: '#373ea3',
+              backgroundGradientFrom: '#0f145c',
+              backgroundGradientTo: '#1f2687',
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 20,
+              },
+            }}
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              marginVertical: 8,
               borderRadius: 20,
-            },
-          }}
-          style={{
-            justifyContent: 'center',
-            alignSelf: 'center',
-            marginVertical: 8,
-            borderRadius: 20,
-            backgroundColor: '#1f2687',
-            backgroundGradientFrom: '#0f145c',
-            backgroundGradientTo: '#1f2687',
-          }}
-          accessor="sold"
-          backgroundColor="transparent"
-          paddingLeft="14"
-          absolute //for the absolute number remove if you want percentage
-        />
+              backgroundColor: '#1f2687',
+              backgroundGradientFrom: '#0f145c',
+              backgroundGradientTo: '#1f2687',
+            }}
+            accessor="sold"
+            backgroundColor="transparent"
+            paddingLeft="10"
+            absolute //for the absolute number remove if you want percentage
+          />
+        ) : null}
       </ScrollView>
     </>
   );
@@ -431,6 +401,37 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  header: {
+    zIndex: 1,
+    height: 70,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  card: {
+    flexDirection: 'row',
+    height: '100%',
+    width: '100%',
+    backgroundColor: colors.secondary,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+    borderRadius: 20,
+  },
+  sparator: {
+    marginTop: 8,
+    paddingTop: 4,
+    borderTopWidth: 1,
+    width: '100%',
+    borderColor: 'gray',
   },
 });
 

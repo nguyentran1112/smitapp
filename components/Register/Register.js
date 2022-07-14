@@ -138,19 +138,7 @@ const Login = props => {
               }}>
               <Text style={styles.appButtonText}>Đăng ký tài khoản</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                //alert('SignIn');
-              }}
-              style={styles.appBtnSubmitLoginGoogle}>
-              <Text style={styles.appButtonTextLoginGoogle}>
-                Đăng nhập với Google
-              </Text>
-              {/* <Icon name={'google'} style={styles.logoGoogle}></Icon> */}
-              <Image
-                style={styles.logoGoogle}
-                source={images.logoGoogle}></Image>
-            </TouchableOpacity>
+            
           </View>
         </View>
       </View>

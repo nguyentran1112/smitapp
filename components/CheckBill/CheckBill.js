@@ -56,83 +56,77 @@ const CheckBill = props => {
   };
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.headerProductList}>
-          <View style={styles.topHeaderProductList}>
-            <TouchableOpacity
-              onPress={() => {
-                checkBillItem(bill) ? showToastFoundedBill() : null;
-                onValue(
-                  firebaseRef(firebaseDatabase, 'bills'),
-                  async snapshot => {
-                    if (snapshot.exists()) {
-                      let snapshotObject = snapshot.val();
-                      setBill(
-                        Object.keys(snapshotObject)
-                          .filter(eachKey => eachKey == searchText)
-                          .map(eachKey => {
-                            let eachObject = snapshotObject[eachKey];
-                            return {
-                              id: eachObject.id,
-                              creator: eachObject.creator,
-                              totalPrice: eachObject.totalPrice,
-                              totalQuantity: eachObject.totalQuantity,
-                              dateOfBill: eachObject.dateOfBill,
-                              cash: eachObject.cash,
-                              inDebt: eachObject.inDebt,
-                              payingGuests: eachObject.payingGuests,
-                              Items: Object.keys(eachObject.Items).map(
-                                eachKey => {
-                                  eachObject.Items[eachKey];
-                                  let product = eachObject.Items[eachKey];
-                                  return {
-                                    productId: product.id,
-                                    productName: product.name,
-                                    productQuantity: product.quantity,
-                                    productPrice: product.price,
-                                  };
-                                },
-                              ),
-                            };
-                          }),
-                      );
-                    } else {
-                      console.log('No data');
-                    }
-                  },
+      <View style={styles.topHeaderProductList}>
+        <TouchableOpacity
+          onPress={() => {
+            checkBillItem(bill) ? showToastFoundedBill() : null;
+            onValue(firebaseRef(firebaseDatabase, 'bills'), async snapshot => {
+              if (snapshot.exists()) {
+                let snapshotObject = snapshot.val();
+                setBill(
+                  Object.keys(snapshotObject)
+                    .filter(eachKey => eachKey == searchText)
+                    .map(eachKey => {
+                      let eachObject = snapshotObject[eachKey];
+                      return {
+                        id: eachObject.id,
+                        creator: eachObject.creator,
+                        totalPrice: eachObject.totalPrice,
+                        totalQuantity: eachObject.totalQuantity,
+                        dateOfBill: eachObject.dateOfBill,
+                        cash: eachObject.cash,
+                        inDebt: eachObject.inDebt,
+                        payingGuests: eachObject.payingGuests,
+                        Items: Object.keys(eachObject.Items).map(eachKey => {
+                          eachObject.Items[eachKey];
+                          let product = eachObject.Items[eachKey];
+                          return {
+                            productId: product.id,
+                            productName: product.name,
+                            productQuantity: product.quantity,
+                            productPrice: product.price,
+                          };
+                        }),
+                      };
+                    }),
                 );
-              }}
-              style={styles.btnSearch}>
-              <Icon style={[styles.iconSearch]} name={'search'}></Icon>
-            </TouchableOpacity>
-            <TextInput
-             defaultValue={searchText}
-              placeholder="Tìm kiếm hóa đơn"
-              onChangeText={text => {
-                setSearchText(text);
-              }}
-              style={[
-                tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`,
-                ,
-                styles.textInput,
-              ]}></TextInput>
-            <TouchableOpacity
-              onPress={() => {
-                navigate('QrScanner', {getData});
-              }}
-              style={{
-                backgroundColor: colors.third,
-                height: 40,
-                width: 40,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 20,
-                marginLeft: 14,
-              }}>
-              <Icon style={styles.iconQrCode} name={'qrcode'}></Icon>
-            </TouchableOpacity>
-          </View>
-        </View>
+              } else {
+                console.log('No data');
+              }
+            });
+          }}
+          style={styles.btnSearch}>
+          <Icon style={[styles.iconSearch]} name={'search'}></Icon>
+        </TouchableOpacity>
+        <TextInput
+          defaultValue={searchText}
+          placeholder="Tìm kiếm hóa đơn"
+          onChangeText={text => {
+            setSearchText(text);
+          }}
+          style={[
+            tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`,
+            ,
+            styles.textInput,
+          ]}></TextInput>
+        <TouchableOpacity
+          onPress={() => {
+            navigate('QrScanner', {getData});
+          }}
+          style={{
+            backgroundColor: colors.third,
+            height: 40,
+            width: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 20,
+            marginLeft: 14,
+          }}>
+          <Icon style={styles.iconQrCode} name={'qrcode'}></Icon>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        <View style={styles.headerProductList}></View>
         {checkBillItem(bill) ? (
           <CheckBillItem bill={bill} />
         ) : (
@@ -164,7 +158,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   headerProductList: {
-    height: 80,
+    height: 0,
   },
   topHeaderProductList: {
     height: 70,
@@ -172,7 +166,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     alignItems: 'center',
-    borderRadius: 20,
   },
   bottomHeaderProductList: {
     backgroundColor: 'blue',

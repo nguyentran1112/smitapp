@@ -17,6 +17,7 @@ import {
   child,
 } from '../../firebase/firebase';
 import {
+  Alert,
   View,
   StyleSheet,
   Text,
@@ -92,73 +93,93 @@ const ProductList = props => {
     );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerProductList}>
-        <View style={styles.topHeaderProductList}>
-          <Icon style={styles.iconSearch} name={'search'}></Icon>
-          <TextInput
-            placeholder="Tìm kiếm sản phẩm"
-            onChangeText={text => {
-              setSearchText(text);
-            }}
-            style={tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`}></TextInput>
-          {/* <Icon style={styles.iconBars} name={'bars'}></Icon> */}
-        </View>
-        <FlatList
-          style={{flex: 1}}
-          horizontal
-          data={category}
-          renderItem={({item}) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  alert(`Đây là nhóm ${item.nameCategory}`);
-                }}
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Image style={styles.CateImage} source={item.icon} />
-              </TouchableOpacity>
-            );
+    <>
+      <View style={styles.topHeaderProductList}>
+        <Icon style={styles.iconSearch} name={'search'}></Icon>
+        <TextInput
+          placeholder="Tìm kiếm sản phẩm"
+          onChangeText={text => {
+            setSearchText(text);
           }}
-          keyExtractor={eachCategory => eachCategory.nameCategory}
-        />
+          style={tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`}></TextInput>
+        {/* <Icon style={styles.iconBars} name={'bars'}></Icon> */}
       </View>
-      {/* {products.map(product => 
+      <View style={styles.container}>
+        <View style={styles.headerProductList}>
+          <FlatList
+            style={{flex: 1}}
+            horizontal
+            data={category}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert(
+                      'Thông tin nhóm',
+                      `Đây là nhóm ${item.nameCategory}`,
+                      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                    );
+                  }}
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image style={styles.CateImage} source={item.icon} />
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={eachCategory => eachCategory.nameCategory}
+          />
+        </View>
+        {/* {products.map(product => 
         <ProductItem product={product} key={product.nameProduct}/>
       )} */}
-      {filterProduct().length > 0 ? (
-        <FlatList
-          data={filterProduct()}
-          renderItem={({item}) => (
-            <ProductItem
-              onPress={() => alert(`Đây là sản phẩm ${item.name}`)}
-              product={item}
-              key={item.name}
-            />
-          )}
-          keyExtractor={eachProduct => eachProduct.name}
-        />
-      ) : (
-        // <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        //   <Text
-        //     style={{
-        //       color: 'gray',
-        //       fontSize: 18,
-        //       fontWeight: 'bold',
-        //     }}>
-        //     Không tìm thấy sản phẩm
-        //   </Text>
-        // </View>
-        <View
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            flex: 1
-          }}>
-          {/* <Text
+        {filterProduct().length > 0 ? (
+          <FlatList
+            data={filterProduct()}
+            renderItem={({item}) => (
+              <ProductItem
+                onPress={() =>
+                  Alert.alert(
+                    'Thông tin sản phẩm',
+                    'Tên sản phẩm: ' +
+                      ' ' +
+                      item.name +
+                      '\n' +
+                      'Giá: ' +
+                      item.price +
+                      'VNĐ' +
+                      '\n' +
+                      'Tồn kho: ' +
+                      item.quantity,
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                  )
+                }
+                product={item}
+                key={item.name}
+              />
+            )}
+            keyExtractor={eachProduct => eachProduct.name}
+          />
+        ) : (
+          // <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          //   <Text
+          //     style={{
+          //       color: 'gray',
+          //       fontSize: 18,
+          //       fontWeight: 'bold',
+          //     }}>
+          //     Không tìm thấy sản phẩm
+          //   </Text>
+          // </View>
+          <View
+            style={{
+              alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'center',
+              flex: 1,
+            }}>
+            {/* <Text
             style={{
               color: 'gray',
               fontSize: 18,
@@ -166,10 +187,15 @@ const ProductList = props => {
             }}>
             Không tìm thấy người dùng
           </Text> */}
-          <LottieView autoPlay loop source={require('../../assets/notfound1.json')} />
-        </View>
-      )}
-    </View>
+            <LottieView
+              autoPlay
+              loop
+              source={require('../../assets/notfound1.json')}
+            />
+          </View>
+        )}
+      </View>
+    </>
   );
 };
 
@@ -178,10 +204,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     flex: 1,
     paddingHorizontal: 10,
-    paddingTop: 10,
+    //paddingTop: 10,
   },
   headerProductList: {
-    height: 160,
+    height: 80,
   },
   topHeaderProductList: {
     height: 70,
@@ -189,7 +215,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     alignItems: 'center',
-    borderRadius: 20,
   },
   bottomHeaderProductList: {
     backgroundColor: 'blue',

@@ -74,7 +74,7 @@ const ProductListCart = props => {
                 price: eachObject.price,
                 stock: eachObject.quantity,
                 quantity: 0,
-                cost: eachObject.cost
+                cost: eachObject.cost,
               };
             }),
           ),
@@ -125,30 +125,30 @@ const ProductListCart = props => {
 
   return (
     <>
+      <View style={styles.topHeaderProductList}>
+        <Icon style={styles.iconSearch} name={'search'}></Icon>
+        <TextInput
+          placeholder="Tìm kiếm sản phẩm"
+          onChangeText={text => {
+            setSearchText(text);
+          }}
+          style={tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`}></TextInput>
+        {/* <Icon style={styles.iconBars} name={'bars'}></Icon> */}
+        <TouchableOpacity
+          style={{
+            backgroundColor: colors.third,
+            height: 40,
+            width: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 20,
+            marginLeft: 14,
+          }}>
+          <Icon style={styles.iconBarCode} name={'barcode'}></Icon>
+        </TouchableOpacity>
+      </View>
       <View style={styles.container}>
         <View style={styles.headerProductList}>
-          <View style={styles.topHeaderProductList}>
-            <Icon style={styles.iconSearch} name={'search'}></Icon>
-            <TextInput
-              placeholder="Tìm kiếm sản phẩm"
-              onChangeText={text => {
-                setSearchText(text);
-              }}
-              style={tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`}></TextInput>
-            {/* <Icon style={styles.iconBars} name={'bars'}></Icon> */}
-            <TouchableOpacity
-              style={{
-                backgroundColor: colors.third,
-                height: 40,
-                width: 40,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 20,
-                marginLeft: 14,
-              }}>
-              <Icon style={styles.iconBarCode} name={'barcode'}></Icon>
-            </TouchableOpacity>
-          </View>
           <FlatList
             style={{flex: 1}}
             horizontal
@@ -221,9 +221,11 @@ const ProductListCart = props => {
         </Text>
         <View style={{display: 'flex', flexDirection: 'row'}}>
           <Text style={tw`text-blue-800 text-xl font-semibold mr-1`}>
-            Tổng tiền: 
+            Tổng tiền:
           </Text>
-          <Text style={tw`text-blue-800 text-xl font-semibold`}>{totalPrice} VND</Text>
+          <Text style={tw`text-blue-800 text-xl font-semibold`}>
+            {totalPrice} VND
+          </Text>
         </View>
       </TouchableOpacity>
     </>
@@ -235,10 +237,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     flex: 1,
     paddingHorizontal: 10,
-    paddingTop: 10,
   },
   headerProductList: {
-    height: 160,
+    height: 80,
   },
   topHeaderProductList: {
     height: 70,
@@ -246,7 +247,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     alignItems: 'center',
-    borderRadius: 20,
   },
   bottomHeaderProductList: {
     backgroundColor: 'blue',

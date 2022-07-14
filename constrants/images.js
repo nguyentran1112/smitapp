@@ -13,6 +13,7 @@ export default {
     logoSmitapp: require('D:/Documents/Learn/TestApp/smitapp/assets/smitaLogo.jpg'),
     iconTorch: require('D:/Documents/Learn/TestApp/smitapp/assets/torch.png'),
     iconBack: require('D:/Documents/Learn/TestApp/smitapp/assets/iconBack.png'),
+    iconFingerprint: require('D:/Documents/Learn/TestApp/smitapp/assets/fingerprint.png'),
     
 
 }

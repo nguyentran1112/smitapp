@@ -133,7 +133,7 @@ const Contact = props => {
 const styles = StyleSheet.create({
   containerChat: {},
   headerChat: {
-    height: 60,
+    height: 70,
     backgroundColor: colors.primary,
     justifyContent: 'center',
     padding: 20,
