@@ -77,8 +77,8 @@ const Bill = ({navigation, route}) => {
           dateOfBill: dateOfBill.toString(),
           creator: email,
           payingGuests: cash - totalPrice,
-          inDebt: (cash - totalPrice)>=0 ? 0 : cash - totalPrice,
-          cash: cash
+          inDebt: cash - totalPrice >= 0 ? 0 : cash - totalPrice,
+          cash: cash,
         };
         firebaseSet(
           firebaseRef(firebaseDatabase, `bills/${idBill}`),
@@ -252,7 +252,6 @@ const Bill = ({navigation, route}) => {
           <TouchableOpacity
             onPress={() => {
               changeModalVisible(true);
-              
             }}
             style={{
               zIndex: 1,
@@ -263,8 +262,8 @@ const Bill = ({navigation, route}) => {
               width: '100%',
               height: 50,
               alignSelf: 'center',
-              marginTop: 10,
-              marginBottom: 10,
+              marginTop: 16,
+              marginBottom: 4,
             }}>
             <Text style={styles.appButtonText}>Thanh toán</Text>
           </TouchableOpacity>
@@ -305,7 +304,10 @@ const styles = StyleSheet.create({
   },
   billInfo: {
     backgroundColor: 'rgb(191, 219, 254)',
-    padding: 10,
+    padding: 16,
+    borderTopStartRadius: 24,
+    borderTopEndRadius: 24,
+
   },
   appButtonText: {
     fontSize: 18,

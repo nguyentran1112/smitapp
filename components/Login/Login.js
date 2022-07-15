@@ -20,6 +20,7 @@ import {
 import {images} from '../../constrants';
 import {isValidEmail, isValidPassword} from '../../utilities/index';
 import TouchID from 'react-native-touch-id';
+import Background from '../Loading/Background'
 import {
   Alert,
   View,
@@ -31,6 +32,8 @@ import {
   TextInput,
 } from 'react-native';
 import Loading from '../Loading/Loading';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Fumi } from 'react-native-textinput-effects';
 const Login = props => {
   //state for validate inputs
   const [errorEmail, setErrorEmail] = useState('');
@@ -73,7 +76,7 @@ const Login = props => {
               console.log(success);
               Auth != null
                 ? navigate('UITap')
-                : alert('Chưa có tài khoản, vui lòng đăng nhập');
+                : Alert.alert('Lỗi', 'Chưa có tài khoản, vui lòng đăng nhập');
             })
             .catch(error => {
               alert(error);
@@ -105,16 +108,15 @@ const Login = props => {
   const {navigate, goBack} = navigation;
   //Loading
   const [loginPending, setLoginPending] = useState(false);
-  const checkLoginPending = user => {
-    return user != null ? setLoginPending(true) : false;
-  };
 
+  console.log('trang thai login', loginPending);
   return (
     <>
-      <ImageBackground
+      {/* <ImageBackground
         source={images.backgroundLogin}
         resizeMode="cover"
-        style={{flexGrow: 1, justifyContent: 'center'}}>
+        style={{flexGrow: 1, justifyContent: 'center'}}> */}
+      <View style={{justifyContent: 'center', flexGrow: 1, zIndex: 1}}>
         <View style={tw`items-center absolute inset-x-0 top-10 h-16`}>
           <View style={tw`bg-blue-200 px-3 py-1 rounded-full`}>
             <Text style={tw`text-blue-800 text-2xl font-semibold`}>
@@ -128,6 +130,7 @@ const Login = props => {
               <Text style={styles.lable}>Email</Text>
               <TextInput
                 placeholder="Nhập email"
+                placeholderTextColor="gray"
                 onChangeText={text => {
                   setErrorEmail(
                     isValidEmail(text)
@@ -136,7 +139,7 @@ const Login = props => {
                   );
                   setEmail(text);
                 }}
-                style={tw`bg-blue-400 px-4 py-3 rounded-2xl text-white text-lg font-semibold`}></TextInput>
+                style={tw`bg-transparent border-blue-400 border-2 px-4 py-3 rounded-2xl text-blue-600 text-lg font-semibold`}></TextInput>
               <Text style={{color: 'red', fontSize: 14}}>{errorEmail}</Text>
             </View>
             <View style={styles.formControl}>
@@ -144,6 +147,7 @@ const Login = props => {
               <TextInput
                 placeholder="Nhập mật khẩu"
                 secureTextEntry={true}
+                placeholderTextColor="gray"
                 onChangeText={text => {
                   setErrorPassword(
                     isValidPassword(text)
@@ -152,7 +156,7 @@ const Login = props => {
                   );
                   setPassword(text);
                 }}
-                style={tw`bg-blue-400 px-4 py-3 rounded-2xl text-white text-lg font-semibold`}></TextInput>
+                style={tw`bg-transparent border-blue-400 border-2 px-4 py-3 rounded-2xl text-blue-600 text-lg font-semibold`}></TextInput>
               <Text style={{color: 'red', fontSize: 14}}>{errorPassword}</Text>
             </View>
 
@@ -160,16 +164,17 @@ const Login = props => {
               <TouchableOpacity
                 disabled={!Validation()}
                 onPress={() => {
+                  setLoginPending(true);
                   signInWithEmailAndPassword(auth, Email, Password)
                     .then(userCredentails => {
                       const user = userCredentails.user;
-                      checkLoginPending(user);
-                      //setLoginPending(false);
                     })
                     .catch(error => {
+                      Alert.alert('Lỗi', 'Sai email hoặc mật khẩu');
+                      setLoginPending(false);
                       const errorCode = error.code;
                       const errorMessage = error.message;
-                      alert(errorMessage);
+                      console.log(errorMessage);
                     });
                 }}
                 style={{
@@ -183,8 +188,8 @@ const Login = props => {
                   width: '100%',
                   height: 50,
                   alignSelf: 'center',
-                  marginTop: 10,
-                  marginBottom: 10,
+                  marginTop: 5,
+                  marginBottom: 15,
                 }}>
                 <Text style={styles.appButtonText}>Đăng nhập</Text>
               </TouchableOpacity>
@@ -204,7 +209,9 @@ const Login = props => {
             </View>
           </View>
         </View>
-      </ImageBackground>
+        {/* </ImageBackground> */}
+      </View>
+      <Background/>
       {loginPending ? <Loading /> : null}
     </>
   );
@@ -228,7 +235,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10,
   },
   appBtnSubmitLoginGoogle: {
@@ -241,7 +248,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignSelf: 'center',
     marginTop: 20,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   appButtonText: {
     fontSize: 18,
@@ -256,7 +263,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   card: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    //backgroundColor: 'rgba(255, 255, 255, 0.7)',
     padding: 10,
     shadowColor: 'white',
     shadowOpacity: 0.2,
@@ -272,7 +279,7 @@ const styles = StyleSheet.create({
     color: 'rgb(30, 64, 175)',
     alignItems: 'flex-start',
     fontSize: 18,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
 });
 export default Login;

@@ -32,6 +32,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  Alert,
 } from 'react-native';
 
 import {
@@ -99,7 +100,7 @@ const Contact = props => {
           data={filterContact()}
           renderItem={({item}) => (
             <ListUser
-              onPress={() => alert(`Email: ${item.email}`)}
+              onPress={() => Alert.alert('Danh bạ',`Email: ${item.email}`)}
               user={item}
               key={item.name}
             />

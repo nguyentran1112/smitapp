@@ -14,6 +14,8 @@ import {
   firebaseDatabase,
 } from '../../firebase/firebase';
 import {
+  Linking,
+  Alert,
   Modal,
   View,
   StyleSheet,
@@ -31,15 +33,18 @@ const Setting = props => {
   const [user, setUser] = useState([]);
   const [isUseFingerprint, setUseFingerprin] = useState(false);
   const toggleSwitch = () => setUseFingerprin(previousState => !previousState);
+
   //Navigation
   const {navigation, routes} = props;
   //Functions of navigate to / back
   const {navigate, goBack} = navigation;
   const [isModal, setIsModal] = useState(false);
   const [data, setChoiceData] = useState('');
-  const [passwordOld, setPasswordOld] = useState('');
-  const [passwordNew, setPasswordNew] = useState('');
-
+  //console.log('Van tay',isUseFingerprint)
+  AsyncStorage.setItem('fingerprint', isUseFingerprint.toString());
+  AsyncStorage.getItem('fingerprint').then(fingerprint => {
+    console.log('Van tay local', fingerprint);
+  });
   let changeModalVisible = bool => {
     setIsModal(bool);
   };
@@ -47,10 +52,7 @@ const Setting = props => {
     setChoiceData(data);
   };
 
-  
   const changePassword = pwN => {
-    // setPasswordOld(pwO);
-    
     console.log(pwN);
     const user = auth.currentUser;
     updatePassword(user, pwN)
@@ -88,7 +90,6 @@ const Setting = props => {
     });
   }, []);
   const email = user.map(user => user.email).toString();
-
   return (
     <View style={styles.containerSetting}>
       <View style={styles.headerSetting}>
@@ -98,25 +99,13 @@ const Setting = props => {
         <View style={styles.componentSetting}>
           <Text style={styles.componentSettingTitle}>Tài khoản</Text>
         </View>
-
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'id-card-o'}></Icon>
           <Text style={styles.componentSettingofTitle}>{email}</Text>
         </View>
-
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconLock} name={'lock'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Đăng nhập bằng vân tay
@@ -139,12 +128,7 @@ const Setting = props => {
           onPress={() => {
             changeModalVisible(true);
           }}
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'key'}></Icon>
           <Text style={styles.componentSettingofTitle}>Đổi mật khẩu</Text>
         </TouchableOpacity>
@@ -153,178 +137,126 @@ const Setting = props => {
             await auth.signOut();
             navigation.dispatch(StackActions.replace('Welcome'));
           }}
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'sign-out'}></Icon>
           <Text style={styles.componentSettingofTitle}>Đăng xuất</Text>
         </TouchableOpacity>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
-          <Icon style={styles.iconTrash} name={'trash'}></Icon>
-          <Text style={styles.componentSettingofTitle}>Xóa tài khoản</Text>
-        </View> */}
         <View style={styles.componentSetting}>
           <Text style={styles.componentSettingTitle}>Cửa hàng</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
-          <Icon style={styles.iconUser} name={'edit'}></Icon>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert('Thông tin cửa hàng', 'Cửa hàng SMITA');
+          }}
+          style={styles.styleSperator}>
+          <Icon style={styles.iconUser} name={'home'}></Icon>
           <Text style={styles.componentSettingofTitle}>
-            Chỉnh sửa thông tin cửa hàng
+            Xem thông tin cửa hàng
           </Text>
-        </View>
+        </TouchableOpacity>
 
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'credit-card'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Phương thức thanh toán
           </Text>
         </View>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert(
+              'Phí vận chuyển',
+              'Phí vận chuyển sẽ được quyết định bởi đơn vị vận chuyển.',
+            )
+          }
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'truck'}></Icon>
           <Text style={styles.componentSettingofTitle}>Phí vận chuyển</Text>
-        </View>
+        </TouchableOpacity>
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'laptop'}></Icon>
           <Text style={styles.componentSettingofTitle}>Website bán hàng</Text>
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-            borderBottom: '1px solid #555',
-          }}>
-          <Icon style={styles.iconTrash} name={'trash'}></Icon>
-          <Text style={styles.componentSettingofTitle}>Xóa cửa hàng</Text>
-        </View> */}
         <View style={styles.componentSetting}>
           <Text style={styles.componentSettingTitle}>Thiết bị</Text>
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'print'}></Icon>
           <Text style={styles.componentSettingofTitle}>Thêm máy in mới</Text>
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'qrcode'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Thêm máy scanner mới
           </Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL(
+              'https://phongvu.vn/cong-nghe/bat-mi-cach-chon-mua-may-in-phu-hop-tot-nhat/#:~:text=L%E1%BB%B0A%20CH%E1%BB%8CN%20M%C3%81Y%20IN%20C%C3%93%20%C4%90%E1%BB%98%20PH%C3%82N%20GI%E1%BA%A2I%20CAO&text=DPI%20%C4%91o%20l%C6%B0%E1%BB%9Dng%20c%C3%B3%20bao,nhu%20c%E1%BA%A7u%20in%20h%C3%ACnh%20%E1%BA%A3nh.',
+            );
+          }}
+          style={styles.styleSperator}>
           <Icon style={styles.iconLock} name={'question'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Hướng dẫn mua máy in
           </Text>
-        </View>
+        </TouchableOpacity>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL(
+              'https://aidcvn.com/huong-dan-cach-su-dung-may-quet-ma-vach.html',
+            );
+          }}
+          style={styles.styleSperator}>
           <Icon style={styles.iconLock} name={'question'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Hướng dẫn mua máy scanner
           </Text>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.componentSetting}>
           <Text style={styles.componentSettingTitle}>Thông tin ứng dụng</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL('https://forms.gle/XW5NCw7DLY1JKPuE8');
+          }}
+          style={styles.styleSperator}>
           <Icon style={styles.iconUser} name={'comment'}></Icon>
           <Text style={styles.componentSettingofTitle}>Đóng góp ý kiến</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(
+              'Thông tin về ứng dụng',
+              'Ứng dụng SMITA v0.1\nNhà phát triển: Trần Chí Nguyên',
+            );
+          }}
+          style={styles.styleSperator}>
           <Icon style={styles.iconAbout} name={'info'}></Icon>
           <Text style={styles.componentSettingofTitle}>Về ứng dụng</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            Alert.alert(
+              'Chính sách mã nguồn mở',
+              'Các mã nguồn mở đều được công khai trên Github',
+            );
+          }}
+          style={styles.styleSperator}>
           <Icon style={styles.iconTrash} name={'book'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Chính sách mã nguồn mở
           </Text>
-        </View>
+        </TouchableOpacity>
         <View
-          style={{
-            flexDirection: 'row',
-            paddingStart: 20,
-            alignItems: 'center',
-            paddingVertical: 10,
-          }}>
+          style={styles.styleSperator}>
           <Icon style={styles.iconTrash} name={'copyright'}></Icon>
           <Text style={styles.componentSettingofTitle}>
             Bản quyền thuộc về CNFIT
@@ -404,6 +336,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 17,
     paddingStart: 10,
+  },
+  styleSperator: {
+    flexDirection: 'row',
+    paddingStart: 20,
+    alignItems: 'center',
+    paddingVertical: 10,
   },
 });
 export default Setting;

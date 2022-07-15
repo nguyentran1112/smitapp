@@ -105,7 +105,7 @@ const CheckBill = props => {
             setSearchText(text);
           }}
           style={[
-            tw`bg-blue-300 h-10 px-4 pl-10 py-2 rounded-xl text-white text-base font-semibold flex-1`,
+            tw`bg-blue-300 h-10 px-4 pl-12 py-2 rounded-3xl text-white text-base font-semibold flex-1`,
             ,
             styles.textInput,
           ]}></TextInput>
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     padding: 10,
     position: 'absolute',
     top: 15,
-    left: 15,
+    left: 25,
     zIndex: 1,
   },
   btnSearch: {

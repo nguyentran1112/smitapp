@@ -64,6 +64,7 @@ const Login = props => {
             <TextInput
               value={Email}
               placeholder="Nhập email"
+              placeholderTextColor="gray"
               onChangeText={text => {
                 setErrorEmail(
                   isValidEmail(text)
@@ -72,13 +73,14 @@ const Login = props => {
                 );
                 setEmail(text);
               }}
-              style={tw`bg-blue-400 px-4 py-3 rounded-2xl text-white text-lg font-semibold`}></TextInput>
+              style={tw`bg-transparent border-blue-400 border-2 px-4 py-3 rounded-2xl text-blue-600 text-lg font-semibold`}></TextInput>
             <Text style={{color: 'red', fontSize: 14}}>{errorEmail}</Text>
           </View>
           <View style={styles.formControl}>
             <Text style={styles.lable}>Mật khẩu</Text>
             <TextInput
               value={Password}
+              placeholderTextColor="gray"
               placeholder="Nhập mật khẩu"
               secureTextEntry={true}
               onChangeText={text => {
@@ -89,7 +91,7 @@ const Login = props => {
                 );
                 setPassword(text);
               }}
-              style={tw`bg-blue-400 px-4 py-3 rounded-2xl text-white text-lg font-semibold`}></TextInput>
+              style={tw`bg-transparent border-blue-400 border-2 px-4 py-3 rounded-2xl text-blue-600 text-lg font-semibold`}></TextInput>
             <Text style={{color: 'red', fontSize: 14}}>{errorPassword}</Text>
           </View>
           <View style={styles.formControl}>
@@ -97,6 +99,7 @@ const Login = props => {
             <TextInput
               value={RePassword}
               placeholder="Nhập lại mật khẩu"
+              placeholderTextColor="gray"
               secureTextEntry={true}
               onChangeText={text => {
                 setErrorRePassword(
@@ -104,7 +107,7 @@ const Login = props => {
                 );
                 setRePassword(text);
               }}
-              style={tw`bg-blue-400 px-4 py-3 rounded-2xl text-white text-base text-lg font-semibold`}></TextInput>
+              style={tw`bg-transparent border-blue-400 border-2 px-4 py-3 rounded-2xl text-blue-600 text-base text-lg font-semibold`}></TextInput>
             <Text style={{color: 'red', fontSize: 14}}>{errorRePassword}</Text>
           </View>
           <View>
@@ -118,8 +121,8 @@ const Login = props => {
                   })
                   .catch(error => {
                     (error.code = 'auth/email-already-in-use')
-                      ? alert('Tài khoản đã tồn tại')
-                      : alert(`${error.code}`);
+                      ? Alert.alert('Lỗi','Tài khoản đã tồn tại')
+                      : Alert.alert('Lỗi',`${error.code}`);
                   });
               }}
               style={{
@@ -133,8 +136,8 @@ const Login = props => {
                 width: '100%',
                 height: 50,
                 alignSelf: 'center',
-                marginTop: 10,
-                marginBottom: 10,
+                marginTop: 8,
+                marginBottom: 8,
               }}>
               <Text style={styles.appButtonText}>Đăng ký tài khoản</Text>
             </TouchableOpacity>
@@ -208,7 +211,7 @@ const styles = StyleSheet.create({
     color: 'rgb(30, 64, 175)',
     alignItems: 'flex-start',
     fontSize: 18,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
 });
 export default Login;

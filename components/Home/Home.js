@@ -82,14 +82,18 @@ const Home = props => {
               />
               <Text style={styles.title}>Xem hóa đơn</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => {
+                navigate('CreateProduct');
+              }}>
               <LottieView
                 style={{width: 75, height: 75}}
                 autoPlay
                 loop
-                source={require('../../assets/product-scanner.json')}
+                source={require('../../assets/market.json')}
               />
-              <Text style={styles.title}>Tạo mã hàng</Text>
+              <Text style={styles.title}>Cập nhật</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -102,16 +106,16 @@ const Home = props => {
                 loop
                 source={require('../../assets/store.json')}
               />
-              <Text style={styles.title}>Kết ca</Text>
+              <Text style={styles.title}>Báo cáo</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.card}>
               <LottieView
                 style={{width: 75, height: 75}}
                 autoPlay
                 loop
-                source={require('../../assets/market.json')}
+                source={require('../../assets/product-scanner.json')}
               />
-              <Text style={styles.title}>Nhận hàng</Text>
+              <Text style={styles.title}>Quét mã</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.card}>
               <LottieView
