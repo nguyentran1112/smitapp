@@ -2,6 +2,7 @@ import React from 'react';
 import Backgroud from '../Loading/Background';
 import LottieView from 'lottie-react-native';
 import {
+  StatusBar,
   SafeAreaView,
   View,
   Text,
@@ -37,6 +38,9 @@ const Home = props => {
   };
   return (
     <>
+      <StatusBar 
+      animated={true}
+      backgroundColor={colors.primary} barStyle="light-content" />
       <View style={{zIndex: 1}}>
         <SafeAreaView style={tw`h-full`}>
           <View style={tw`pt-12 items-center`}>
@@ -108,7 +112,11 @@ const Home = props => {
               />
               <Text style={styles.title}>Báo cáo</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => {
+                navigate('QrScannerMain');
+              }}>
               <LottieView
                 style={{width: 75, height: 75}}
                 autoPlay

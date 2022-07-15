@@ -112,7 +112,7 @@ const Turnover = () => {
   const totalCash = listBill.reduce((total, bill) => total + bill.cash, 0);
 
   const labelPieChart = items
-    .filter(item => item.value === value)
+    .filter(item => item.value == value)
     .map(item => item.label);
   const totalBill = listBill.length;
   console.log(labelPieChart);

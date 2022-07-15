@@ -19,8 +19,10 @@ import QrScanner from "./CheckBill/QrScanner";
 import BackgroundQrcode from "./Loading/BackgroundQrcode";
 import SplashScreen from "./Welcome/SplashScreen";
 import CreateProduct from "./CreateProduct/CreateProduct";
+import QrScannerMain from "./CheckBill/QrScannerMain"
 
 export {
+    QrScannerMain,
     CreateProduct,
     SplashScreen,
     BackgroundQrcode,

@@ -158,8 +158,10 @@ const CreateProduct = () => {
         </View>
 
         <View style={styles.formControl}>
+         
           <Text style={styles.lable}>Đường dẫn hình ảnh</Text>
           <TextInput
+           value={linkImg}
             placeholder="Nhập đường dẫn hình ảnh"
             onChangeText={text => {
               setErrorLink(
@@ -180,6 +182,7 @@ const CreateProduct = () => {
               cost: cost,
               price: price,
               quantity: quantity,
+              sold: 0
             };
             firebaseSet(
               firebaseRef(firebaseDatabase, `products/${id}`),

@@ -19,15 +19,15 @@ import {RNCamera} from 'react-native-camera';
 import {colors, images} from '../../constrants';
 import BackgroundQrcode from '../Loading/BackgroundQrcode';
 // create a component
-const QrScanner = ({navigation, route}) => {
+const QrScannerMain = ({navigation, route}) => {
   const {navigate, goBack} = navigation;
   const [dataScanner, setDataScanner] = useState('');
   const [copiedText, setCopiedText] = useState('');
   const [isTorch, setIsTorch] = useState(false);
   const [isBtn, setIsBtn] = useState(false);
-  const [textBtn, setTextBtn] = useState('Sao chép');
+  const [textBtn, setTextBtn] = useState('Chọn mã');
   const [torch, setTorch] = useState('');
-  
+
   const copyToClipboard = () => {
     Clipboard.setString(dataScanner);
   };
@@ -42,9 +42,9 @@ const QrScanner = ({navigation, route}) => {
       ToastAndroid.TOP,
     );
   };
-  const showToastGoBack = () => {
+  const showToastChoice = () => {
     ToastAndroid.showWithGravity(
-      `Bạn có thể tra cứu đơn hàng nhanh với mã ${copiedText}`,
+      `Đã chọn mã thành công ${copiedText}`,
       ToastAndroid.SHORT,
       ToastAndroid.TOP,
     );
@@ -105,14 +105,13 @@ const QrScanner = ({navigation, route}) => {
           onPress={() => {
             copyToClipboard();
             fetchCopiedText();
-            route.params.getData(copiedText);
             if (isBtn) {
-              showToastGoBack();
-              setTextBtn('Sao chép');
+              showToastCopied();
+              setTextBtn('Chọn mã');
               setIsBtn(false);
             } else {
-              showToastCopied();
-              setTextBtn('Tìm đơn hàng');
+              showToastChoice();
+              setTextBtn('Sao chép');
               setIsBtn(true);
             }
           }}
@@ -164,8 +163,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 20,
     backgroundColor: colors.secondary,
-    
-    
   },
   btnTorch: {
     position: 'absolute',
@@ -182,4 +179,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default QrScanner;
+export default QrScannerMain;

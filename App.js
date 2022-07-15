@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  QrScannerMain,
   CreateProduct,
   SplashScreen,
   QrScanner,
@@ -90,6 +91,11 @@ const App = () => {
             options={{headerTitle: 'Test', headerShown: false}}
             name={'QrScanner'}
             component={QrScanner}
+          />
+          <Stack.Screen
+            options={{headerTitle: 'Test', headerShown: false}}
+            name={'QrScannerMain'}
+            component={QrScannerMain}
           />
           <Stack.Screen
             options={{headerTitle: 'Test', headerShown: false}}
