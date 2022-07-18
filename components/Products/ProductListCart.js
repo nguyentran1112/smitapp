@@ -75,6 +75,7 @@ const ProductListCart = props => {
                 stock: eachObject.quantity,
                 quantity: 0,
                 cost: eachObject.cost,
+                sold: eachObject.sold
               };
             }),
           ),

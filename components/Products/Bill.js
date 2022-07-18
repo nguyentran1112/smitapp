@@ -41,6 +41,7 @@ const Bill = ({navigation, route}) => {
     product => product.quantity >= 1,
   );
   const listProductUpdate = listProductInBill.map(product => product);
+  console.log(listProductUpdate);
   const detailBill = listProductInBill.map(
     product => product.name + ' ' + product.price + ' ' + product.quantity,
   );
@@ -102,7 +103,7 @@ const Bill = ({navigation, route}) => {
             ).then(() => {});
             firebaseSet(
               firebaseRef(firebaseDatabase, `products/${element.id}/sold`),
-              element.quantity,
+              element.sold + element.quantity,
             ).then(() => {});
           } else {
             return null;
@@ -307,7 +308,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopStartRadius: 24,
     borderTopEndRadius: 24,
-
   },
   appButtonText: {
     fontSize: 18,
