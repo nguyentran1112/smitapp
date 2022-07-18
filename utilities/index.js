@@ -1,2 +1,3 @@
 import {isValidEmail, isValidPassword} from './Validation';
-export {isValidEmail, isValidPassword}
+import addCommas from './addCommas';
+export {isValidEmail, isValidPassword, addCommas} 

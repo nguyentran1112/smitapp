@@ -1,6 +1,7 @@
 import React, {Component, useState, useEffect} from 'react';
 import LottieView from 'lottie-react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import { addCommas } from '../../utilities';
 import {
   setCart,
   increment,
@@ -75,7 +76,7 @@ const ProductListCart = props => {
                 stock: eachObject.quantity,
                 quantity: 0,
                 cost: eachObject.cost,
-                sold: eachObject.sold
+                sold: eachObject.sold,
               };
             }),
           ),
@@ -225,7 +226,7 @@ const ProductListCart = props => {
             Tổng tiền:
           </Text>
           <Text style={tw`text-blue-800 text-xl font-semibold`}>
-            {totalPrice} VND
+            {addCommas(totalPrice)} VND
           </Text>
         </View>
       </TouchableOpacity>

@@ -2,6 +2,8 @@
 import React, {Component, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useSelector, useDispatch} from 'react-redux';
+import { addCommas } from '../../utilities';
+
 import {
   setCart,
   increment,
@@ -207,7 +209,7 @@ const Bill = ({navigation, route}) => {
                 fontWeight: 'bold',
                 justifyContent: 'center',
               }}>
-              {totalPrice} VND
+              {addCommas(totalPrice)} VND
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -247,7 +249,7 @@ const Bill = ({navigation, route}) => {
                 fontWeight: 'bold',
                 justifyContent: 'center',
               }}>
-              {totalPrice} VND
+              {addCommas(totalPrice)} VND
             </Text>
           </View>
           <TouchableOpacity

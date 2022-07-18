@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {colors, images} from '../../constrants';
 import {Table, Row, Rows} from 'react-native-table-component';
 import QRCode from 'react-native-qrcode-svg';
+import { addCommas } from '../../utilities';
 
 // create a component
 const CheckBillItem = ({bill}) => {
@@ -15,7 +16,7 @@ const CheckBillItem = ({bill}) => {
   const totalQuantity = bill.map(bill => Number(bill.totalQuantity.toString()));
   const dateOfBill = bill.map(bill => bill.dateOfBill.toString());
   const arryItems = bill.map(bill => bill.Items);
-
+  let logoFromFile = require('../../assets/smitaLogo.jpg');
   const tableHead = ['Mã', 'Tên', 'SL', 'Đơn giá', 'TT'];
   // const tableData = [
   //   ['1', '2', '3', '4'],
@@ -77,20 +78,20 @@ const CheckBillItem = ({bill}) => {
             <Text style={{flex: 1, fontSize: 16, color: 'black'}}>
               Tổng tiền:
             </Text>
-            <Text style={styles.styleTextInfo}>{totalPrice} VNĐ</Text>
+            <Text style={styles.styleTextInfo}>{addCommas(totalPrice)} VNĐ</Text>
           </View>
 
           <View style={styles.styleViewInfo}>
             <Text style={{flex: 1, fontSize: 16, color: 'black'}}>
               Khách trả:
             </Text>
-            <Text style={styles.styleTextInfo}>{cash} VNĐ</Text>
+            <Text style={styles.styleTextInfo}>{addCommas(cash)} VNĐ</Text>
           </View>
           <View style={styles.styleViewInfo}>
             <Text style={{flex: 1, fontSize: 16, color: 'black'}}>
               Trả lại khách:
             </Text>
-            <Text style={styles.styleTextInfo}>{payingGuests} VNĐ</Text>
+            <Text style={styles.styleTextInfo}>{addCommas(payingGuests)} VNĐ</Text>
           </View>
           <View style={styles.styleViewInfo}>
             <Text style={styles.styleTextInfo}>Loại thanh toán: Tiền mặt</Text>
@@ -101,7 +102,7 @@ const CheckBillItem = ({bill}) => {
           <View style={{alignSelf: 'center', marginVertical: 4}}>
             <QRCode
               value={id}
-              logo={(source = images.logoSmitapp)}
+              logo={logoFromFile}
               logoSize={30}
               logoBackgroundColor="transparent"
             />

@@ -14,6 +14,7 @@ import {
   get,
   child,
 } from '../../firebase/firebase';
+import { addCommas } from '../../utilities';
 import {
   ScrollView,
   StyleSheet,
@@ -36,6 +37,7 @@ import {Dimensions} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 // create a component
 const Turnover = () => {
+  
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -171,7 +173,7 @@ const Turnover = () => {
                       fontWeight: 'bold',
                       fontSize: 22,
                     }}>
-                    {turnover} VNĐ
+                    {addCommas(turnover)} VNĐ
                   </Text>
                 </View>
                 <View style={styles.sparator}>
@@ -210,7 +212,7 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {totalCash > turnover ? turnover : totalCash} VNĐ
+                    {totalCash > turnover ? addCommas(turnover) : addCommas(totalCash)} VNĐ
                   </Text>
                 </View>
                 <View style={styles.sparator}>
@@ -221,7 +223,7 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {turnover - totalCash < 0 ? 0 : turnover - totalCash} VNĐ
+                    {turnover - totalCash < 0 ? 0 : addCommas(turnover) - addCommas(totalCash)} VNĐ
                   </Text>
                 </View>
                 <View style={styles.sparator}>
@@ -232,7 +234,7 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {grossProfit} VNĐ
+                    {addCommas(grossProfit)} VNĐ
                   </Text>
                 </View>
                 <View style={styles.sparator}>
@@ -245,7 +247,7 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {totalCost} VNĐ
+                    {addCommas(totalCost)} VNĐ
                   </Text>
                 </View>
                 <View style={styles.sparator}>
@@ -258,7 +260,7 @@ const Turnover = () => {
                       color: colors.primary,
                       fontSize: 16,
                     }}>
-                    {totalSale} VNĐ
+                    {addCommas(totalSale)} VNĐ
                   </Text>
                 </View>
               </View>
@@ -344,7 +346,7 @@ const Turnover = () => {
             margin: 8,
             borderRadius: 20,
             alignSelf: 'center',
-            marginBottom: 16
+            marginBottom: 16,
           }}
         />
 
